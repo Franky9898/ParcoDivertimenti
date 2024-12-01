@@ -55,7 +55,7 @@ public class ParcoDivertimentiRivisitato
 		//Variabili ausiliarie
 		boolean programmaFunziona = (visitatore1Uscito && visitatore2Uscito && visitatore3Uscito);
 		boolean sceltaGiostrePossibile = (visitatore1Uscito && visitatore1InCoda && visitatore1Salito) || (visitatore2Uscito && visitatore2InCoda && visitatore2Salito)
-				|| (visitatore3Uscito && visitatore3InCoda && visitatore3Salito);
+				|| (visitatore3Uscito && visitatore3InCoda && visitatore3Salito); //Logica sbagliata. Inoltre serve veramente?
 		boolean visitatore1NonDisponibile = visitatore1Uscito || visitatore1InCoda || visitatore1Salito; //Credo sia questo il problema **** rimane false anche quando Uscito è true
 		boolean visitatore2NonDisponibile = visitatore2Uscito || visitatore2InCoda || visitatore2Salito;
 		boolean visitatore3NonDisponibile = visitatore3Uscito || visitatore3InCoda || visitatore3Salito;
@@ -92,7 +92,7 @@ public class ParcoDivertimentiRivisitato
 						while (IdVisitatore == 1 && (visitatore1InCoda == true || visitatore1Uscito == true || visitatore1Salito == true)) //Se vale una delle seguenti condizioni il visitaore non può più essere scelto 
 						{
 							if (visitatore1InCoda == true)
-								System.out.println("Il visitatore è salito sull'attrazione in cui faceva la fila. Scegli un altro visitatore. ");
+								System.out.println("Il visitatore è in fila. Scegli un altro visitatore. ");
 							if (visitatore1Uscito == true)
 								System.out.println("Il visitatore è uscito dal parco. Scegli un altro visitatore. ");
 							if (visitatore1Salito)
@@ -104,7 +104,7 @@ public class ParcoDivertimentiRivisitato
 						while (IdVisitatore == 2 && (visitatore2InCoda == true || visitatore2Uscito == true || visitatore2Salito == true)) //Se vale una delle seguenti condizioni il visitaore non può più essere scelto
 						{
 							if (visitatore2InCoda == true)
-								System.out.println("Il visitatore è salito sull'attrazione in cui faceva la fila. Scegli un altro visitatore. ");
+								System.out.println("Il visitatore è in fila. Scegli un altro visitatore. ");
 							if (visitatore2Uscito == true)
 								System.out.println("Il visitatore è uscito dal parco. Scegli un altro visitatore. ");
 							if (visitatore2Salito == true)
@@ -116,7 +116,7 @@ public class ParcoDivertimentiRivisitato
 						while (IdVisitatore == 3 && (visitatore3InCoda == true || visitatore3Uscito == true || visitatore3Salito == true)) //Se vale una delle seguenti condizioni il visitaore non può più essere scelto
 						{
 							if (visitatore3InCoda == true)
-								System.out.println("Il visitatore è salito sull'attrazione in cui faceva la fila. Scegli un altro visitatore. ");
+								System.out.println("Il visitatore è in fila. Scegli un altro visitatore. ");
 							if (visitatore3Uscito == true)
 								System.out.println("Il visitatore è uscito dal parco. Scegli un altro visitatore. ");
 							if (visitatore3Salito == true)
@@ -131,166 +131,164 @@ public class ParcoDivertimentiRivisitato
 					}
 
 				}
-				while (!sceltaGiostrePossibile == true)
+				int IdAttrazione = -1;
+				while (IdAttrazione == -1)
 				{
-					int IdAttrazione = -1;
-					while (IdAttrazione != 1 && IdAttrazione != 2 && IdAttrazione != 4) //Forse equivalenti
+					while (IdAttrazione != 1 && IdAttrazione != 2 && IdAttrazione != 4)
 					{
-						while (IdAttrazione < 1 || IdAttrazione > 4)
+						System.out.println("Inserisci ID attrazione da visitare. Puoi scegliere tra 1, 2 e 4. Attenzione 4 equivale a uscire: ");
+						IdAttrazione = scanner.nextInt();
+						switch (IdAttrazione)
 						{
-							System.out.println("Inserisci ID attrazione da visitare. Puoi scegliere tra 1, 2 e 4. Attenzione 4 equivale a uscire: ");
-							IdAttrazione = scanner.nextInt();
-							switch (IdAttrazione)
+						case 1:
+							while (IdAttrazione == 1 && (attrazione1CodaAttuale == attrazione1CodaMassima || attrazione1GiriAttuali == attrazione1GiriMassimi))
+							{
+								if (attrazione1CodaAttuale == attrazione1CodaMassima)
+									System.out.println("L'attrazione ha la coda piena, selezionare altre: ");
+								if (attrazione1GiriAttuali == attrazione1GiriMassimi)
+									System.out.println("L'attrazione non può più effettuare giri, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							while (IdAttrazione == 1 && IdVisitatore == 1 && visitatore1Budget < attrazione1CostoBiglietto)
+							{
+								System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							while (IdAttrazione == 1 && IdVisitatore == 2 && visitatore2Budget < attrazione1CostoBiglietto)
+							{
+								System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							while (IdAttrazione == 1 && IdVisitatore == 3 && visitatore3Budget < attrazione1CostoBiglietto)
+							{
+								System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							break;
+						case 2:
+							while (IdAttrazione == 2 && (attrazione2CodaAttuale == attrazione2CodaMassima || attrazione2GiriAttuali == attrazione2GiriMassimi))
+							{
+								if (attrazione2CodaAttuale == attrazione2CodaMassima)
+									System.out.println("L'attrazione ha la coda piena, selezionare altre: ");
+								if (attrazione2GiriAttuali == attrazione2GiriMassimi)
+									System.out.println("L'attrazione non può più effettuare giri, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							while (IdAttrazione == 2 && IdVisitatore == 1 && visitatore1Budget < attrazione2CostoBiglietto)
+							{
+								System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							while (IdAttrazione == 2 && IdVisitatore == 2 && visitatore2Budget < attrazione2CostoBiglietto)
+							{
+								System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							while (IdAttrazione == 2 && IdVisitatore == 3 && visitatore3Budget < attrazione2CostoBiglietto)
+							{
+								System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
+								IdAttrazione = -1; //Tornare alla scelta attrazione
+							}
+							break;
+						case 4:
+							switch (IdVisitatore)
 							{
 							case 1:
-								while (IdAttrazione == 1 && (attrazione1CodaAttuale == attrazione1CodaMassima || attrazione1GiriAttuali == attrazione1GiriMassimi))
+								visitatore1Uscito = true;
+								if (visitatore1VisitatoAttrazione == false)
 								{
-									if (attrazione1CodaAttuale == attrazione1CodaMassima)
-										System.out.println("L'attrazione ha la coda piena, selezionare altre: ");
-									if (attrazione1GiriAttuali == attrazione1GiriMassimi)
-										System.out.println("L'attrazione non può più effettuare giri, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
-								}
-								while (IdAttrazione == 1 && IdVisitatore == 1 && visitatore1Budget < attrazione1CostoBiglietto)
+									System.out.println("Arrivederci");
+									IdVisitatore = -1; //Tornare scelta visitatore
+
+								} else if (visitatore1VisitatoAttrazione == true)
 								{
-									System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
-								}
-								while (IdAttrazione == 1 && IdVisitatore == 2 && visitatore2Budget < attrazione1CostoBiglietto)
-								{
-									System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
-								}
-								while (IdAttrazione == 1 && IdVisitatore == 3 && visitatore3Budget < attrazione1CostoBiglietto)
-								{
-									System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
+									System.out.println("Sei rimasto soddisfatto? Scegli 1 per sì, 2 per no: ");
+									int inputVisistatoreSoddisfatto = scanner.nextInt();
+									while (inputVisistatoreSoddisfatto != 1 && inputVisistatoreSoddisfatto != 2)
+									{
+										System.out.println("Input non valido. Inserisci 1 per sì, 2 per no:");
+										inputVisistatoreSoddisfatto = scanner.nextInt();
+									}
+									switch (inputVisistatoreSoddisfatto)
+									{
+									case 1:
+										numeroVisitatoriSoddisfatti++;
+										System.out.println("Grazie per il feedback positivo. A presto.");
+										break;
+									case 2:
+										System.out.println("Mi dispiace che il nostro parco non abbia soddisfatto le tue aspettative. Arrivederci.");
+										break;
+									}
+									IdVisitatore = -1; //Tornare scelta visitatore
 								}
 								break;
 							case 2:
-								while (IdAttrazione == 2 && (attrazione2CodaAttuale == attrazione2CodaMassima || attrazione2GiriAttuali == attrazione2GiriMassimi))
+								visitatore2Uscito = true;
+								if (visitatore2VisitatoAttrazione == false)
 								{
-									if (attrazione2CodaAttuale == attrazione2CodaMassima)
-										System.out.println("L'attrazione ha la coda piena, selezionare altre: ");
-									if (attrazione2GiriAttuali == attrazione2GiriMassimi)
-										System.out.println("L'attrazione non può più effettuare giri, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
-								}
-								while (IdAttrazione == 2 && IdVisitatore == 1 && visitatore1Budget < attrazione2CostoBiglietto)
+									System.out.println("Arrivederci"); //Tornare scelta visitatore
+									IdVisitatore = -1;
+
+								} else if (visitatore2VisitatoAttrazione == true)
 								{
-									System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
-								}
-								while (IdAttrazione == 2 && IdVisitatore == 2 && visitatore2Budget < attrazione2CostoBiglietto)
-								{
-									System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
-								}
-								while (IdAttrazione == 2 && IdVisitatore == 3 && visitatore3Budget < attrazione2CostoBiglietto)
-								{
-									System.out.println("Budget insufficiente per giro attrazione, selezionare altre: ");
-									IdAttrazione = -1; //Tornare alla scelta attrazione
+									System.out.println("Sei rimasto soddisfatto? Scegli 1 per sì, 2 per no: ");
+									int inputVisistatoreSoddisfatto = scanner.nextInt();
+									while (inputVisistatoreSoddisfatto != 1 && inputVisistatoreSoddisfatto != 2)
+									{
+										System.out.println("Input non valido. Inserisci 1 per sì, 2 per no:");
+										inputVisistatoreSoddisfatto = scanner.nextInt();
+									}
+									switch (inputVisistatoreSoddisfatto)
+									{
+									case 1:
+										numeroVisitatoriSoddisfatti++;
+										System.out.println("Grazie per il feedback positivo. A presto.");
+										break;
+									case 2:
+										System.out.println("Mi dispiace che il nostro parco non abbia soddisfatto le tue aspettative. Arrivederci.");
+										break;
+									}
+									IdVisitatore = -1; //Tornare scelta visitatore
 								}
 								break;
-							case 4:
-								switch (IdVisitatore)
+							case 3:
+								visitatore3Uscito = true;
+								if (visitatore3VisitatoAttrazione == false)
 								{
-								case 1:
-									visitatore1Uscito = true;
-									if (visitatore1VisitatoAttrazione == false)
+									System.out.println("Arrivederci"); //Tornare scelta visitatore
+									IdVisitatore = -1;
+								} else if (visitatore3VisitatoAttrazione == true)
+								{
+									System.out.println("Sei rimasto soddisfatto? Scegli 1 per sì, 2 per no: ");
+									int inputVisistatoreSoddisfatto = scanner.nextInt();
+									while (inputVisistatoreSoddisfatto != 1 && inputVisistatoreSoddisfatto != 2)
 									{
-										System.out.println("Arrivederci");
-										IdVisitatore = -1; //Tornare scelta visitatore
-
-									} else if (visitatore1VisitatoAttrazione == true)
-									{
-										System.out.println("Sei rimasto soddisfatto? Scegli 1 per sì, 2 per no: ");
-										int inputVisistatoreSoddisfatto = scanner.nextInt();
-										while (inputVisistatoreSoddisfatto != 1 && inputVisistatoreSoddisfatto != 2)
-										{
-											System.out.println("Input non valido. Inserisci 1 per sì, 2 per no:");
-											inputVisistatoreSoddisfatto = scanner.nextInt();
-										}
-										switch (inputVisistatoreSoddisfatto)
-										{
-										case 1:
-											numeroVisitatoriSoddisfatti++;
-											System.out.println("Grazie per il feedback positivo. A presto.");
-											break;
-										case 2:
-											System.out.println("Mi dispiace che il nostro parco non abbia soddisfatto le tue aspettative. Arrivederci.");
-											break;
-										}
-										IdVisitatore = -1; //Tornare scelta visitatore
+										System.out.println("Input non valido. Inserisci 1 per sì, 2 per no:");
+										inputVisistatoreSoddisfatto = scanner.nextInt();
 									}
-									break;
-								case 2:
-									visitatore2Uscito = true;
-									if (visitatore2VisitatoAttrazione == false)
+									switch (inputVisistatoreSoddisfatto)
 									{
-										System.out.println("Arrivederci"); //Tornare scelta visitatore
-										IdVisitatore = -1;
-
-									} else if (visitatore2VisitatoAttrazione == true)
-									{
-										System.out.println("Sei rimasto soddisfatto? Scegli 1 per sì, 2 per no: ");
-										int inputVisistatoreSoddisfatto = scanner.nextInt();
-										while (inputVisistatoreSoddisfatto != 1 && inputVisistatoreSoddisfatto != 2)
-										{
-											System.out.println("Input non valido. Inserisci 1 per sì, 2 per no:");
-											inputVisistatoreSoddisfatto = scanner.nextInt();
-										}
-										switch (inputVisistatoreSoddisfatto)
-										{
-										case 1:
-											numeroVisitatoriSoddisfatti++;
-											System.out.println("Grazie per il feedback positivo. A presto.");
-											break;
-										case 2:
-											System.out.println("Mi dispiace che il nostro parco non abbia soddisfatto le tue aspettative. Arrivederci.");
-											break;
-										}
-										IdVisitatore = -1; //Tornare scelta visitatore
+									case 1:
+										numeroVisitatoriSoddisfatti++;
+										System.out.println("Grazie per il feedback positivo. A presto.");
+										break;
+									case 2:
+										System.out.println("Mi dispiace che il nostro parco non abbia soddisfatto le tue aspettative. Arrivederci.");
+										break;
 									}
-									break;
-								case 3:
-									visitatore3Uscito = true;
-									if (visitatore3VisitatoAttrazione == false)
-									{
-										System.out.println("Arrivederci"); //Tornare scelta visitatore
-										IdVisitatore = -1;
-									} else if (visitatore3VisitatoAttrazione == true)
-									{
-										System.out.println("Sei rimasto soddisfatto? Scegli 1 per sì, 2 per no: ");
-										int inputVisistatoreSoddisfatto = scanner.nextInt();
-										while (inputVisistatoreSoddisfatto != 1 && inputVisistatoreSoddisfatto != 2)
-										{
-											System.out.println("Input non valido. Inserisci 1 per sì, 2 per no:");
-											inputVisistatoreSoddisfatto = scanner.nextInt();
-										}
-										switch (inputVisistatoreSoddisfatto)
-										{
-										case 1:
-											numeroVisitatoriSoddisfatti++;
-											System.out.println("Grazie per il feedback positivo. A presto.");
-											break;
-										case 2:
-											System.out.println("Mi dispiace che il nostro parco non abbia soddisfatto le tue aspettative. Arrivederci.");
-											break;
-										}
-										IdVisitatore = -1; //Tornare scelta visitatore
-									}
-									break;
+									IdVisitatore = -1; //Tornare scelta visitatore
 								}
 								break;
 							}
+							break;
 						}
 					}
 					System.out.println("Dopo scelta attrazione");
 
 					//Conferma Attrazione *************
-					if (IdAttrazione == 1)
+					switch (IdAttrazione)
 					{
+					case 1:
 						switch (IdVisitatore)
 						{
 						case 1:
@@ -438,9 +436,8 @@ public class ParcoDivertimentiRivisitato
 							System.out.println("Debug 1");
 							break;
 						}
-					}
-					if (IdAttrazione == 2)
-					{
+						break;
+					case 2:
 						switch (IdVisitatore)
 						{
 						case 1:
@@ -578,7 +575,7 @@ public class ParcoDivertimentiRivisitato
 										System.out.println("Caso 2");
 										continue;
 									default:
-										System.out.println("Input non valido, premere 1 o 2");
+										System.out.println("Input non valido, premere 1 per sì o 2 per no.");
 										break;
 									}
 								}
@@ -587,6 +584,7 @@ public class ParcoDivertimentiRivisitato
 						default:
 							System.out.println("Debug 2");
 						}
+						break;
 					}
 					System.out.println("Fuori if Attrazione");
 					if (IdVisitatore == -1)
