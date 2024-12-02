@@ -87,7 +87,7 @@ public class ParcoDivertimentiRivisitato
 			{
 				while (IdVisitatore < 1 || IdVisitatore > 4) //Check su IdVisitatore
 				{
-					System.out.println("Quale visitatore sta visitando? Puoi scegliere 1,2 e 3.");
+					System.out.println("Quale visitatore sta visitando? Puoi scegliere 1,2 e 3: ");
 					IdVisitatore = scanner.nextInt();
 					switch (IdVisitatore)
 					{
