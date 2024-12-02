@@ -36,10 +36,12 @@ public class ParcoDivertimentiRivisitato
 		int attrazione1TempoGiro = 3;
 		int attrazione1CodaAttuale = 0;
 		int attrazione1CapienzaAttuale = 5;
-		int attrazione1TempoAttesa = attrazione1TempoGiro;
+		double attrazione1TempoAttesa = attrazione1TempoGiro;
 		int attrazione1CodaMassima = attrazione1CapienzaMassima; //C'è solo una coda perché era problematico ricordare chi fosse arrivato prima e chi dopo
 		int attrazione1GiriAttuali = 0;
 		int attrazione1GiriEffettuati = 0;
+		int attrazione1Visita = 0;
+		double attrazione1NumeroCode = 0;
 		//2
 		int attrazione2CostoBiglietto = 8;
 		int attrazione2CostoOperazionale = 2;
@@ -48,14 +50,16 @@ public class ParcoDivertimentiRivisitato
 		int attrazione2TempoGiro = 4;
 		int attrazione2CodaAttuale = 0;
 		int attrazione2CapienzaAttuale = 0;
-		int attrazione2TempoAttesa = attrazione2TempoGiro;
+		double attrazione2TempoAttesa = attrazione2TempoGiro;
 		int attrazione2CodaMassima = attrazione2CapienzaMassima; //C'è solo una coda perché era problematico ricordare chi fosse arrivato prima e chi dopo
 		int attrazione2GiriAttuali = 0;
 		int attrazione2GiriEffettuati = 0;
+		int attrazione2Visita = 0;
+		double attrazione2NumeroCode = 0;
 		//Variabili ausiliarie
+		int guadagnoParco = 0;
 		boolean programmaFunziona = (visitatore1Uscito && visitatore2Uscito && visitatore3Uscito);
-		boolean sceltaGiostrePossibile = (visitatore1Uscito && visitatore1InCoda && visitatore1Salito) || (visitatore2Uscito && visitatore2InCoda && visitatore2Salito)
-				|| (visitatore3Uscito && visitatore3InCoda && visitatore3Salito); //Logica sbagliata. Inoltre serve veramente?
+		//boolean sceltaGiostrePossibile = (visitatore1Uscito && visitatore1InCoda && visitatore1Salito) || (visitatore2Uscito && visitatore2InCoda && visitatore2Salito)|| (visitatore3Uscito && visitatore3InCoda && visitatore3Salito); //Logica sbagliata. Inoltre serve veramente?
 		boolean visitatore1NonDisponibile = visitatore1Uscito || visitatore1InCoda || visitatore1Salito; //Credo sia questo il problema **** rimane false anche quando Uscito è true
 		boolean visitatore2NonDisponibile = visitatore2Uscito || visitatore2InCoda || visitatore2Salito;
 		boolean visitatore3NonDisponibile = visitatore3Uscito || visitatore3InCoda || visitatore3Salito;
@@ -126,10 +130,9 @@ public class ParcoDivertimentiRivisitato
 						break;
 					case 4:
 						sceltaVisitatoreNonPossibile = true;
-						sceltaGiostrePossibile = true;
+						//sceltaGiostrePossibile = true;
 						break;
 					}
-
 				}
 				int IdAttrazione = -1;
 				while (IdAttrazione == -1)
@@ -299,6 +302,7 @@ public class ParcoDivertimentiRivisitato
 								visitatore1VisitatoAttrazione = true;
 								visitatore1Budget -= attrazione1CostoBiglietto;
 								visitatore1Salito = true;
+								attrazione1Visita++;
 								IdAttrazione = -1;
 								IdVisitatore = -1; // Tornare scelta visitatore
 								break;
@@ -319,6 +323,7 @@ public class ParcoDivertimentiRivisitato
 											System.out.println("Il visitatore si è messo in coda.");
 											attrazione1CodaAttuale++;
 											visitatore1InCoda = true;
+											attrazione1Visita++;
 											visitatore1Budget -= attrazione1CostoBiglietto;
 											IdVisitatore = -1;
 										} else
@@ -346,6 +351,7 @@ public class ParcoDivertimentiRivisitato
 								visitatore2VisitatoAttrazione = true;
 								visitatore2Budget -= attrazione1CostoBiglietto;
 								visitatore2Salito = true;
+								attrazione1Visita++;
 								IdAttrazione = -1;
 								IdVisitatore = -1; // Tornare scelta visitatore
 								break;
@@ -366,6 +372,7 @@ public class ParcoDivertimentiRivisitato
 											System.out.println("Il visitatore si è messo in coda.");
 											attrazione1CodaAttuale++;
 											visitatore2InCoda = true;
+											attrazione1Visita++;
 											visitatore2Budget -= attrazione1CostoBiglietto;
 											IdVisitatore = -1;
 										} else
@@ -393,6 +400,7 @@ public class ParcoDivertimentiRivisitato
 								visitatore3VisitatoAttrazione = true;
 								visitatore3Budget -= attrazione1CostoBiglietto;
 								visitatore3Salito = true;
+								attrazione1Visita++;
 								IdAttrazione = -1;
 								IdVisitatore = -1; // Tornare scelta visitatore
 								break;
@@ -413,6 +421,7 @@ public class ParcoDivertimentiRivisitato
 											System.out.println("Il visitatore si è messo in coda.");
 											attrazione1CodaAttuale++;
 											visitatore3InCoda = true;
+											attrazione1Visita++;
 											visitatore3Budget -= attrazione1CostoBiglietto;
 											IdVisitatore = -1;
 										} else
@@ -448,6 +457,7 @@ public class ParcoDivertimentiRivisitato
 								visitatore1VisitatoAttrazione = true;
 								visitatore1Budget -= attrazione2CostoBiglietto;
 								visitatore1Salito = true;
+								attrazione2Visita++;
 								IdAttrazione = -1;
 								IdVisitatore = -1;
 								break;
@@ -468,6 +478,7 @@ public class ParcoDivertimentiRivisitato
 											System.out.println("Il visitatore si è messo in coda.");
 											attrazione2CodaAttuale++;
 											visitatore1InCoda = true;
+											attrazione2Visita++;
 											visitatore1Budget -= attrazione2CostoBiglietto;
 											IdVisitatore = -1;
 										} else
@@ -495,6 +506,7 @@ public class ParcoDivertimentiRivisitato
 								visitatore2VisitatoAttrazione = true;
 								visitatore2Budget -= attrazione2CostoBiglietto;
 								visitatore2Salito = true;
+								attrazione2Visita++;
 								IdAttrazione = -1;
 								IdVisitatore = -1; // Tornare scelta visitatore
 								break;
@@ -515,6 +527,7 @@ public class ParcoDivertimentiRivisitato
 											System.out.println("Il visitatore si è messo in coda.");
 											attrazione2CodaAttuale++;
 											visitatore2InCoda = true;
+											attrazione2Visita++;
 											visitatore2Budget -= attrazione2CostoBiglietto;
 											IdVisitatore = -1;
 										} else
@@ -542,6 +555,7 @@ public class ParcoDivertimentiRivisitato
 								visitatore3VisitatoAttrazione = true;
 								visitatore3Budget -= attrazione2CostoBiglietto;
 								visitatore3Salito = true;
+								attrazione2Visita++;
 								IdAttrazione = -1;
 								IdVisitatore = -1; // Tornare scelta visitatore
 								break;
@@ -562,6 +576,7 @@ public class ParcoDivertimentiRivisitato
 											System.out.println("Il visitatore si è messo in coda.");
 											attrazione2CodaAttuale++;
 											visitatore3InCoda = true;
+											attrazione2Visita++;
 											visitatore3Budget -= attrazione2CostoBiglietto;
 											IdVisitatore = -1;
 										} else
@@ -599,11 +614,15 @@ public class ParcoDivertimentiRivisitato
 
 			if (attrazione1CapienzaAttuale > 0 && attrazione1GiriEffettuati < attrazione1GiriMassimi)
 			{
+				if (attrazione1CodaAttuale > 0)
+					attrazione1NumeroCode++;
 				attrazione1GiriEffettuati++;
 				attrazione1CapienzaAttuale = attrazione1CodaAttuale;
 			}
 			if (attrazione2CapienzaAttuale > 0 && attrazione2GiriEffettuati < attrazione2GiriMassimi)
 			{
+				if (attrazione2CodaAttuale > 0)
+					attrazione2NumeroCode++;
 				attrazione2GiriEffettuati++;
 				attrazione2CapienzaAttuale = attrazione2CodaAttuale;
 			}
@@ -644,15 +663,33 @@ public class ParcoDivertimentiRivisitato
 			}
 			attrazione1CodaAttuale = 0;
 			attrazione2CodaAttuale = 0;
+			//Da togliere
+			sceltaVisitatoreNonPossibile = false;
+			IdVisitatore = -1;
+
 		}
 		System.out.println("Fuori while programmaFunzionante, ciclo generale del programma.");
 
 		percentualeVisitatoriSoddisfatti = numeroVisitatoriSoddisfatti / numeroVisitatori * 100;
+		guadagnoParco = (attrazione1CostoBiglietto * attrazione1Visita - attrazione1CostoOperazionale) * attrazione1GiriEffettuati
+				+ (attrazione2CostoBiglietto * attrazione2Visita - attrazione2CostoOperazionale) * attrazione2GiriEffettuati;
 
 		//Controllo if per le statistiche (mettere dentro primo if)
 		System.out.println("La percentuale dei visitatori soddisfatti è: " + percentualeVisitatoriSoddisfatti);
 
+		if (attrazione1Visita > attrazione2Visita)
+			System.out.println("La prima attrazione è popolare.");
+		else if (attrazione1Visita < attrazione2Visita)
+			System.out.println("La seconda attrazione è popolare.");
+		else
+			System.out.println("Entrambe le attrazioni sono state visitate lo stesso numero di volte");
+
+		System.out.println("Il tempo medio di attesa per l'attrazione 1 è stato: " + (attrazione1TempoAttesa / attrazione1NumeroCode));
+		System.out.println("Il tempo medio di attesa per l'attrazione 2 è stato: " + (attrazione2TempoAttesa / attrazione2NumeroCode));
+
+		System.out.println("Il guadagno netto in questa giornata è stato: " + guadagnoParco);
 		scanner.close();
+		System.exit(0);
 	}
 	//ToDo: Fare in modo che si aggiornino le attrazioni una volta che tutti i visitatori hanno fatto una scelta
 }
