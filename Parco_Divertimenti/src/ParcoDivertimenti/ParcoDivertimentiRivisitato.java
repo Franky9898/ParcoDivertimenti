@@ -6,8 +6,8 @@ public class ParcoDivertimentiRivisitato
 {
 	public static void main(String[] args)
 	{//Variabili Visitatori
-		int numeroVisitatori = 3;
-		int numeroVisitatoriSoddisfatti = 0;
+		double numeroVisitatori = 3;
+		double numeroVisitatoriSoddisfatti = 0;
 		double percentualeVisitatoriSoddisfatti = 0;
 		//1
 		int visitatore1Budget = 50;
@@ -131,6 +131,9 @@ public class ParcoDivertimentiRivisitato
 					case 4:
 						sceltaVisitatoreNonPossibile = true;
 						//sceltaGiostrePossibile = true;
+						break;
+					case 5:
+						programmaFunziona = true;
 						break;
 					}
 				}
@@ -684,8 +687,17 @@ public class ParcoDivertimentiRivisitato
 		else
 			System.out.println("Entrambe le attrazioni sono state visitate lo stesso numero di volte");
 
-		System.out.println("Il tempo medio di attesa per l'attrazione 1 è stato: " + (attrazione1TempoAttesa / attrazione1NumeroCode));
-		System.out.println("Il tempo medio di attesa per l'attrazione 2 è stato: " + (attrazione2TempoAttesa / attrazione2NumeroCode));
+		double attrazione1TempoMedio = attrazione1TempoAttesa / attrazione1NumeroCode;
+		double attrazione2TempoMedio = attrazione2TempoAttesa / attrazione2NumeroCode;
+		if (attrazione1NumeroCode > 0)
+			System.out.println("Il tempo medio di attesa per l'attrazione 1 è stato: " + attrazione1TempoMedio);
+		else
+			System.out.println("Il tempo medio di attesa per l'attrazione 1 è stato: 0 ");
+
+		if (attrazione2NumeroCode > 0)
+			System.out.println("Il tempo medio di attesa per l'attrazione 2 è stato: " + attrazione2TempoMedio);
+		else
+			System.out.println("Il tempo medio di attesa per l'attrazione 2 è stato: 0 ");
 
 		System.out.println("Il guadagno netto in questa giornata è stato: " + guadagnoParco);
 		scanner.close();
