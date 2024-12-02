@@ -35,7 +35,7 @@ public class ParcoDivertimentiRivisitato
 		int attrazione1GiriMassimi = 4;
 		int attrazione1TempoGiro = 3;
 		int attrazione1CodaAttuale = 0;
-		int attrazione1CapienzaAttuale = 5;
+		int attrazione1CapienzaAttuale = 0;
 		double attrazione1TempoAttesa = attrazione1TempoGiro;
 		int attrazione1CodaMassima = attrazione1CapienzaMassima; //C'è solo una coda perché era problematico ricordare chi fosse arrivato prima e chi dopo
 		int attrazione1GiriAttuali = 0;
@@ -51,7 +51,7 @@ public class ParcoDivertimentiRivisitato
 		int attrazione2CodaAttuale = 0;
 		int attrazione2CapienzaAttuale = 0;
 		double attrazione2TempoAttesa = attrazione2TempoGiro;
-		int attrazione2CodaMassima = attrazione2CapienzaMassima; //C'è solo una coda perché era problematico ricordare chi fosse arrivato prima e chi dopo
+		int attrazione2CodaMassima = attrazione2CapienzaMassima;
 		int attrazione2GiriAttuali = 0;
 		int attrazione2GiriEffettuati = 0;
 		int attrazione2Visita = 0;
@@ -59,8 +59,7 @@ public class ParcoDivertimentiRivisitato
 		//Variabili ausiliarie
 		int guadagnoParco = 0;
 		boolean programmaFunziona = (visitatore1Uscito && visitatore2Uscito && visitatore3Uscito);
-		//boolean sceltaGiostrePossibile = (visitatore1Uscito && visitatore1InCoda && visitatore1Salito) || (visitatore2Uscito && visitatore2InCoda && visitatore2Salito)|| (visitatore3Uscito && visitatore3InCoda && visitatore3Salito); //Logica sbagliata. Inoltre serve veramente?
-		boolean visitatore1NonDisponibile = visitatore1Uscito || visitatore1InCoda || visitatore1Salito; //Credo sia questo il problema **** rimane false anche quando Uscito è true
+		boolean visitatore1NonDisponibile = visitatore1Uscito || visitatore1InCoda || visitatore1Salito;
 		boolean visitatore2NonDisponibile = visitatore2Uscito || visitatore2InCoda || visitatore2Salito;
 		boolean visitatore3NonDisponibile = visitatore3Uscito || visitatore3InCoda || visitatore3Salito;
 		boolean sceltaVisitatoreNonPossibile = visitatore1NonDisponibile && visitatore2NonDisponibile && visitatore3NonDisponibile;
@@ -297,7 +296,6 @@ public class ParcoDivertimentiRivisitato
 							break;
 						}
 					}
-					System.out.println("Dopo scelta attrazione");
 
 					//Conferma Attrazione
 					switch (IdAttrazione)
@@ -349,7 +347,6 @@ public class ParcoDivertimentiRivisitato
 										break;
 									case 2:
 										//Tornare a scelta attrazione
-										System.out.println("Caso 2");
 										continue;
 									default:
 										System.out.println("Input non valido, premere 1 o 2");
@@ -402,7 +399,6 @@ public class ParcoDivertimentiRivisitato
 										break;
 									case 2:
 										//Tornare a scelta attrazione
-										System.out.println("Caso 2");
 										continue;
 									default:
 										System.out.println("Input non valido, premere 1 o 2");
@@ -455,7 +451,6 @@ public class ParcoDivertimentiRivisitato
 										break;
 									case 2:
 										//Tornare a scelta attrazione
-										System.out.println("Caso 2");
 										continue;
 									default:
 										System.out.println("Input non valido, premere 1 o 2");
@@ -463,9 +458,6 @@ public class ParcoDivertimentiRivisitato
 									}
 								}
 							}
-							break;
-						default:
-							System.out.println("Debug 1");
 							break;
 						}
 						break;
@@ -516,7 +508,6 @@ public class ParcoDivertimentiRivisitato
 										break;
 									case 2:
 										//Tornare a scelta attrazione
-										System.out.println("Caso 2");
 										continue;
 									default:
 										System.out.println("Input non valido, premere 1 o 2");
@@ -569,7 +560,6 @@ public class ParcoDivertimentiRivisitato
 										break;
 									case 2:
 										//Tornare a scelta attrazione
-										System.out.println("Caso 2");
 										continue;
 									default:
 										System.out.println("Input non valido, premere 1 o 2");
@@ -622,7 +612,6 @@ public class ParcoDivertimentiRivisitato
 										break;
 									case 2:
 										//Tornare a scelta attrazione
-										System.out.println("Caso 2");
 										continue;
 									default:
 										System.out.println("Input non valido, premere 1 per sì o 2 per no.");
@@ -631,22 +620,16 @@ public class ParcoDivertimentiRivisitato
 								}
 							}
 							break;
-						default:
-							System.out.println("Debug 2");
 						}
 						break;
 					}
-					System.out.println("Fuori if Attrazione");
 					if (IdVisitatore == -1)
-						break; //Per ricreare problema premere 1 1 4 1 2
+						break;
 				}
-				System.out.println("Fuori while sceltaGiostrePossibile: scelta e conferma attrazione o uscita parco.");
-			}  //*********
-			System.out.println("Fuori Scelta Visitatore");
+			}
 
 			//Aggiornamento Attrazioni
 			System.out.println("Le giostre entrano in funzione.");
-
 			if (attrazione1CapienzaAttuale > 0 && attrazione1GiriEffettuati < attrazione1GiriMassimi)
 			{
 				if (attrazione1CodaAttuale > 0)
@@ -698,12 +681,12 @@ public class ParcoDivertimentiRivisitato
 			}
 			attrazione1CodaAttuale = 0;
 			attrazione2CodaAttuale = 0;
-			//Da togliere
-			sceltaVisitatoreNonPossibile = false;
 			IdVisitatore = -1;
-
+			visitatore1NonDisponibile = visitatore1Uscito || visitatore1InCoda || visitatore1Salito;
+			visitatore2NonDisponibile = visitatore2Uscito || visitatore2InCoda || visitatore2Salito;
+			visitatore3NonDisponibile = visitatore3Uscito || visitatore3InCoda || visitatore3Salito;
+			sceltaVisitatoreNonPossibile = visitatore1NonDisponibile && visitatore2NonDisponibile && visitatore3NonDisponibile;
 		}
-		System.out.println("Fuori while programmaFunzionante, ciclo generale del programma.");
 
 		//Statistiche
 		percentualeVisitatoriSoddisfatti = numeroVisitatoriSoddisfatti / numeroVisitatori * 100;
@@ -722,7 +705,6 @@ public class ParcoDivertimentiRivisitato
 			System.out.println("Il tempo medio di attesa per l'attrazione 1 è stato: " + attrazione1TempoMedio);
 		else
 			System.out.println("Il tempo medio di attesa per l'attrazione 1 è stato: 0 ");
-
 		if (attrazione2NumeroCode > 0)
 			System.out.println("Il tempo medio di attesa per l'attrazione 2 è stato: " + attrazione2TempoMedio);
 		else
@@ -732,5 +714,4 @@ public class ParcoDivertimentiRivisitato
 		scanner.close();
 		System.exit(0);
 	}
-
 }
